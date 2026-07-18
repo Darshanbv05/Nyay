@@ -1,8 +1,43 @@
 # Nyay
 
-Nyay is a stateless web app that explains residential rental agreements in plain language, preserves each original clause, and screens it against a bounded local ruleset. Users can paste text or upload a text-based PDF, choose an explanation language, review flagged clauses, generate a negotiation draft, find legal-aid escalation options, and export a PDF report.
+Nyay is a stateless legal-document screening app for Indian agreements. It reads pasted text or text-based PDFs, preserves the original clauses, detects the likely document type and Indian jurisdiction, explains obligations in plain language, and flags terms that match its indexed legal-risk rules.
 
-> Nyay provides informational screening, not legal advice. The bundled Karnataka, India ruleset deliberately marks unverified citations as `[NEEDS RESEARCH]`; a qualified local legal reviewer must replace those markers before the rules are relied upon.
+The analyzer has specialized checks for rental, loan, employment, and service agreements. Every other agreement or legal document uses a general Indian-contract baseline, so an unfamiliar document type is analyzed instead of being rejected. Reports include clause-level risks, obligations, hidden costs, penalties, timelines, negotiation suggestions, applicable-law references, jurisdiction warnings, and a downloadable PDF.
+
+> Nyay is an informational issue-spotting tool, not a lawyer, court, or complete legal research system. It does not contain every Indian Act, rule, amendment, judgment, custom, or local requirement. A result marked safe only means that no indexed warning pattern matched. A licensed Indian advocate must verify current law, jurisdiction, enforceability, and the facts before anyone relies on a report.
+
+## Legal coverage
+
+The indexed baseline currently includes:
+
+- General Indian contract-risk patterns, including free consent, access to legal proceedings, one-sided liability, unilateral changes, forfeiture, and hidden charges.
+- Official references to the Indian Contract Act, 1872 for selected issues.
+- Electronic-record, electronic-signature, and electronic-contract issue spotting under the Information Technology Act, 2000.
+- Constitutional-principle issue spotting for terms involving government or public-authority action, including Articles 14, 19, 21, 32, and 39A of the Constitution of India.
+- Type-specific rule libraries for rental, loan, employment, and service agreements.
+- Selected Karnataka rental references.
+- Detection of Indian states and Union Territories, with a warning when state-specific rules, stamp duty, registration, procedure, amendments, or court interpretation are not indexed.
+
+Constitutional rights commonly regulate State action; they do not automatically invalidate a private agreement. Nyay therefore presents constitutional references as issues for legal review, not as automatic findings that a clause is unconstitutional.
+
+Primary sources used by the indexed rules:
+
+- [Constitution of India — Legislative Department](https://legislative.gov.in/constitution-of-india/)
+- [Indian Contract Act, 1872 — India Code](https://www.indiacode.nic.in/handle/123456789/2187)
+- [Information Technology Act, 2000 — India Code](https://www.indiacode.nic.in/handle/123456789/13683)
+- [Consumer Protection Act, 2019 — India Code](https://www.indiacode.nic.in/handle/123456789/15256)
+- [Karnataka Rent Act, 1999 — India Code](https://www.indiacode.nic.in/handle/123456789/7810)
+
+Rules without a verified primary citation remain marked `[NEEDS RESEARCH]` and are shown as requiring professional verification.
+
+## Supported input
+
+- Pasted document text
+- Text-based PDF files up to 10 MB
+- Up to 100,000 extracted characters per analysis
+- Up to 50 analyzed clauses per report
+
+Scanned/image-only PDFs and OCR are not currently supported. “Any agreement” refers to the document’s subject matter; it does not mean every file format or every possible law is fully covered.
 
 ## Run locally
 
@@ -17,7 +52,7 @@ npm run dev
 
 Open `http://localhost:5173`. The API runs on `http://localhost:3001`; `GET /api/health` is the health check.
 
-The app works in constrained demo mode without an API key. To enable native LLM explanations, add `ANTHROPIC_API_KEY` and a currently available `ANTHROPIC_MODEL` to `backend/.env`. The LLM is only allowed to match rules in `backend/src/data/ruleset.json`; returned rule IDs and citations are validated against that file.
+The app works in constrained local mode without an API key. To enable LLM-generated explanations, add `ANTHROPIC_API_KEY` and an available `ANTHROPIC_MODEL` to `backend/.env`. Model output is constrained to the supplied indexed rules, and returned rule IDs and citations are validated against those rules.
 
 ## Test
 
@@ -25,12 +60,13 @@ The app works in constrained demo mode without an API key. To enable native LLM 
 npm test
 ```
 
-For a reliable demo, paste `samples/demo-agreement.txt`. It intentionally triggers the security-deposit, unannounced-entry, essential-repair, and deposit-forfeiture checks.
+For a rental demo, paste `samples/demo-agreement.txt`.
 
 ## API
 
-- `POST /api/analyze` accepts `{ text, source_type, output_language }`. Language is mandatory.
-- `POST /api/extract` accepts a PDF in multipart field `file`.
-- `GET /api/languages` returns the editable supported-language list.
+- `POST /api/analyze` accepts `{ text, source_type, output_language }`.
+- `POST /api/extract` accepts a text-based PDF in multipart field `file`.
+- `POST /api/ask` answers questions from the analyzed document and indexed rules.
+- `GET /api/languages` returns the supported explanation languages.
 
-Scanned PDF/image OCR is intentionally deferred as the specification's nice-to-have item. No document or report is persisted.
+Documents are anonymized before analysis and are not intentionally persisted by the application.

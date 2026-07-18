@@ -4,5 +4,5 @@
   { "code": "kn", "label": "ಕನ್ನಡ", "promptLabel": "Kannada" },
   { "code": "ta", "label": "தமிழ்", "promptLabel": "Tamil" },
   { "code": "te", "label": "తెలుగు", "promptLabel": "Telugu" },
-  { "code": "es", "label": "Español", "promptLabel": "Spanish" }
+  { "code": "bn", "label": "বাংলা", "promptLabel": "Bengali" }
 ]

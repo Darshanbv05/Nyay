@@ -14,13 +14,13 @@ const topics = {
   te: {
     'risk summary':'ప్రమాద సారాంశం','security deposit':'భద్రతా డిపాజిట్','automatic renewal':'స్వయంచాలక పునరుద్ధరణ','rent payment':'అద్దె చెల్లింపు','ending agreement':'ఒప్పంద ముగింపు','notice period':'నోటీసు వ్యవధి','repairs maintenance':'మరమ్మతులు మరియు నిర్వహణ','property access':'ఆస్తి ప్రవేశం','utility services':'వినియోగ సేవలు','dispute resolution':'వివాద పరిష్కారం','legal liability':'చట్టపరమైన బాధ్యత','fees penalties':'రుసుములు మరియు జరిమానాలు','subletting rules':'ఉపఅద్దె నియమాలు','agreement registration':'ఒప్పంద నమోదు','independent contractor services':'స్వతంత్ర కాంట్రాక్టర్ సేవలు','scope services':'సేవల పరిధి','payment terms':'చెల్లింపు నిబంధనలు','agreement term':'ఒప్పంద నిబంధన',
   },
-  es: {
-    'risk summary':'Resumen de riesgo','security deposit':'Depósito de seguridad','automatic renewal':'Renovación automática','rent payment':'Pago del alquiler','ending agreement':'Finalización del acuerdo','notice period':'Plazo de aviso','repairs maintenance':'Reparaciones y mantenimiento','property access':'Acceso a la propiedad','utility services':'Servicios públicos','dispute resolution':'Resolución de disputas','legal liability':'Responsabilidad legal','fees penalties':'Tasas y penalizaciones','subletting rules':'Reglas de subarriendo','agreement registration':'Registro del acuerdo','independent contractor services':'Servicios de contratista independiente','scope services':'Alcance de los servicios','payment terms':'Condiciones de pago','agreement term':'Condición del acuerdo',
+  bn: {
+    'risk summary':'ঝুঁকির সারাংশ','security deposit':'নিরাপত্তা জামানত','automatic renewal':'স্বয়ংক্রিয় নবায়ন','rent payment':'ভাড়া পরিশোধ','ending agreement':'চুক্তি সমাপ্তি','notice period':'নোটিশের সময়কাল','repairs maintenance':'মেরামত ও রক্ষণাবেক্ষণ','property access':'সম্পত্তিতে প্রবেশ','utility services':'ইউটিলিটি পরিষেবা','dispute resolution':'বিরোধ নিষ্পত্তি','legal liability':'আইনি দায়','fees penalties':'ফি ও জরিমানা','subletting rules':'উপভাড়ার নিয়ম','agreement registration':'চুক্তি নিবন্ধন','independent contractor services':'স্বাধীন ঠিকাদার পরিষেবা','scope services':'পরিষেবার পরিধি','payment terms':'পরিশোধের শর্ত','agreement term':'চুক্তির শর্ত',
   },
 };
 
 const sectionWords = {
-  en: 'Section', hi: 'अनुभाग', kn: 'ವಿಭಾಗ', ta: 'பிரிவு', te: 'విభాగం', es: 'Sección',
+  en: 'Section', hi: 'अनुभाग', kn: 'ವಿಭಾಗ', ta: 'பிரிவு', te: 'విభాగం', bn: 'ধারা',
 };
 
 export function localizeSourceLabel(label, language = 'en') {

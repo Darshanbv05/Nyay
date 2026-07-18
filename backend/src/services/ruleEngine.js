@@ -14,7 +14,7 @@ export function negotiationPower(clauses, languageCode = 'en', documentType = 'g
     kn: ['ಮನೆಮಾಲೀಕರಿಗೆ ಹೆಚ್ಚು ಅನುಕೂಲ', 'ಮನೆಮಾಲೀಕರಿಗೆ ಸ್ವಲ್ಪ ಅನುಕೂಲ', 'ತುಲನಾತ್ಮಕವಾಗಿ ಸಮತೋಲನ'],
     ta: ['வீட்டு உரிமையாளருக்கு மிகவும் சாதகம்', 'வீட்டு உரிமையாளருக்கு ஓரளவு சாதகம்', 'ஒப்பீட்டளவில் சமநிலை'],
     te: ['ఇంటి యజమానికి బాగా అనుకూలం', 'ఇంటి యజమానికి కొంత అనుకూలం', 'సాపేక్షంగా సమతుల్యం'],
-    es: ['Muy favorable al propietario', 'Moderadamente favorable al propietario', 'Relativamente equilibrado']
+    bn: ['বাড়িওয়ালার পক্ষে অত্যন্ত একতরফা', 'বাড়িওয়ালার পক্ষে কিছুটা একতরফা', 'তুলনামূলকভাবে ভারসাম্যপূর্ণ']
   };
   const index = score < 45 ? 0 : score < 75 ? 1 : 2;
   const genericLabels = ['Strongly One-Sided', 'Moderately One-Sided', 'Relatively Balanced'];
@@ -27,19 +27,21 @@ export function collectApplicableLaws(clauses, ruleset, languageCode = 'en') {
   const grouped = new Map();
   for (const rule of relevant) {
     const law = rule.legal_basis || '[NEEDS RESEARCH]';
-    if (!grouped.has(law)) grouped.set(law, []);
-    grouped.get(law).push(rule.check_description);
+    const key = `${law}|||${rule.source_url || ''}`;
+    if (!grouped.has(key)) grouped.set(key, { law, source_url: rule.source_url || null, topics: [] });
+    grouped.get(key).topics.push(rule.check_description);
   }
   const localized = {
     hi: count => `यह संदर्भ प्रासंगिक है क्योंकि इससे जुड़े ${count} सत्यापित नियम इस किराया समझौते में पहचाने गए मुद्दों को शामिल करते हैं।`,
     kn: count => `ಈ ಉಲ್ಲೇಖವು ಪ್ರಸ್ತುತವಾಗಿದೆ, ಏಕೆಂದರೆ ಇದಕ್ಕೆ ಸಂಬಂಧಿಸಿದ ${count} ಪರಿಶೀಲಿತ ನಿಯಮಗಳು ಈ ಬಾಡಿಗೆ ಒಪ್ಪಂದದಲ್ಲಿ ಗುರುತಿಸಿದ ವಿಷಯಗಳನ್ನು ಒಳಗೊಂಡಿವೆ.`,
     ta: count => `இந்த மேற்கோள் பொருத்தமானது; இதனுடன் தொடர்புடைய ${count} சரிபார்க்கப்பட்ட விதிகள் இந்த வாடகை ஒப்பந்தத்தில் கண்டறியப்பட்ட விஷயங்களை உள்ளடக்குகின்றன.`,
     te: count => `ఈ సూచన సంబంధితమైనది, ఎందుకంటే దీనికి సంబంధించిన ${count} ధృవీకరించిన నియమాలు ఈ అద్దె ఒప్పందంలో గుర్తించిన అంశాలను కవర్ చేస్తాయి.`,
-    es: count => `Esta referencia es pertinente porque ${count} reglas verificadas asociadas cubren los problemas detectados en este contrato de alquiler.`
+    bn: count => `এই তথ্যসূত্রটি প্রাসঙ্গিক, কারণ এর সঙ্গে যুক্ত ${count}টি যাচাইকৃত নিয়ম নথিতে শনাক্ত বিষয়গুলো অন্তর্ভুক্ত করে।`
   };
-  return [...grouped].map(([law_name, topics]) => ({
-    law_name: /NEEDS RESEARCH/i.test(law_name) ? 'Legal reference requires verification' : law_name,
-    verification_status: /NEEDS RESEARCH/i.test(law_name) ? 'research' : 'indexed',
+  return [...grouped.values()].map(({ law, source_url, topics }) => ({
+    law_name: /NEEDS RESEARCH/i.test(law) ? 'Legal reference requires verification' : law,
+    verification_status: /NEEDS RESEARCH/i.test(law) ? 'research' : 'indexed',
+    source_url,
     matched_topics: topics,
     why_relevant: languageCode === 'en' ? `This reference was activated because the indexed rules cover: ${topics.join(' ')}` : localized[languageCode]?.(topics.length) || `This reference is tied to ${topics.length} matched rule(s).`
   }));
