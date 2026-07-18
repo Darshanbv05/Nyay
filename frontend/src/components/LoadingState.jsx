@@ -1,0 +1,3 @@
+import { useEffect, useState } from 'react';
+import { ui } from '../i18n/uiTranslations.js';
+export default function LoadingState({language='en'}){const stages=['stage1','stage2','stage3','stage4'],[stage,setStage]=useState(0);useEffect(()=>{const id=setInterval(()=>setStage(current=>Math.min(current+1,stages.length-1)),1500);return()=>clearInterval(id)},[]);return <section className="panel loading" aria-live="polite"><div className="spinner"/><h2>{ui(language,'reading')}</h2><p>{ui(language,'readingNote')}</p><ol>{stages.map((key,index)=><li key={key} className={index<stage?'done':index===stage?'current':''}><span>{index<stage?'✓':index+1}</span>{ui(language,key)}</li>)}</ol></section>}

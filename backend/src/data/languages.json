@@ -1,0 +1,8 @@
+[
+  { "code": "en", "label": "English", "promptLabel": "English" },
+  { "code": "hi", "label": "हिन्दी", "promptLabel": "Hindi" },
+  { "code": "kn", "label": "ಕನ್ನಡ", "promptLabel": "Kannada" },
+  { "code": "ta", "label": "தமிழ்", "promptLabel": "Tamil" },
+  { "code": "te", "label": "తెలుగు", "promptLabel": "Telugu" },
+  { "code": "es", "label": "Español", "promptLabel": "Spanish" }
+]

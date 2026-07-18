@@ -1,0 +1,1 @@
+export function anonymizeText(text) { return text.replace(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/g, '[EMAIL REDACTED]').replace(/(?:\+91[\s-]?)?[6-9](?:[\s-]?\d){9}\b/g, '[PHONE REDACTED]').replace(/(?:PAN|PAN No\.?|ID No\.?)?[\s:-]*[A-Z]{5}\d{4}[A-Z]\b/gi, '[PAN REDACTED]').replace(/\b\d{4}[ -]?\d{4}[ -]?\d{4}\b/g, '[ID REDACTED]'); }

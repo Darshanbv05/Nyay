@@ -1,0 +1,4 @@
+{
+  "Karnataka, India":{"aliases":["karnataka","bengaluru","bangalore","mysuru","mangalore"],"status":"supported","ruleset":"ruleset.json","note":"Karnataka rental references are indexed; applicability to a particular premises and other document types still requires professional verification."},
+  "India — state unspecified":{"aliases":["india","indian law"],"status":"partial","ruleset":null,"note":"Country detected but state-specific rules cannot be selected reliably."}
+}

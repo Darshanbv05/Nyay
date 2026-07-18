@@ -1,0 +1,6 @@
+{
+  "insufficient_eviction_notice": { "question": "Can a landlord make me leave immediately?", "answer": "Do not assume an immediate-eviction clause is enforceable. The Karnataka Rent Act regulates eviction grounds where it applies; get case-specific advice before acting." },
+  "no_receipts": { "question": "Should I receive proof when I pay rent?", "answer": "The Karnataka Rent Act includes a rent-receipt provision where the Act applies. Keep independent payment records as well." },
+  "unilateral_rent_increase": { "question": "Can rent be increased without warning?", "answer": "The indexed Act contains a notice provision for rent revision. The exact rule depends on whether the Act covers your premises and agreement." },
+  "unregistered_agreement": { "question": "Should my tenancy agreement be written down?", "answer": "The indexed Act contains a written-tenancy-agreement provision. Registration and stamp requirements need separate verification for your term and facts." }
+}
