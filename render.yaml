@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: nyay-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JURISDICTION_NAME
+        value: India
+      - key: SUPPORTED_LANGUAGES
+        value: en,hi,kn,ta,te,bn
+      - key: FRONTEND_ORIGIN
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: ANTHROPIC_MODEL
+        sync: false

@@ -54,6 +54,19 @@ Open `http://localhost:5173`. The API runs on `http://localhost:3001`; `GET /api
 
 The app works in constrained local mode without an API key. To enable LLM-generated explanations, add `ANTHROPIC_API_KEY` and an available `ANTHROPIC_MODEL` to `backend/.env`. Model output is constrained to the supplied indexed rules, and returned rule IDs and citations are validated against those rules.
 
+## Deploy the backend on Render
+
+The included `render.yaml` configures the backend as an npm service:
+
+- Root directory: `backend`
+- Build command: `npm ci`
+- Start command: `npm start`
+- Health check: `/api/health`
+
+Set `FRONTEND_ORIGIN` to the deployed frontend origin. Set `ANTHROPIC_API_KEY` and `ANTHROPIC_MODEL` in Render if LLM-generated explanations are required. Do not set `PORT`; Render provides it automatically.
+
+For an existing manually configured Render service, apply the same Root Directory, Build Command, and Start Command in its Settings. Select npm rather than Yarn and keep `package-lock.json`; it provides reproducible npm installs.
+
 ## Test
 
 ```bash
