@@ -98,6 +98,38 @@ export function downloadCompleteReport(report) {
     list(items).forEach(item => write(`- ${item}`, { indent }));
   };
 
+  const writeLetter = value => {
+    const blocks = String(value ?? '')
+      .replace(/\r\n?/g, '\n')
+      .split(/\n{2,}/)
+      .map(block => block.trim())
+      .filter(Boolean);
+
+    blocks.forEach(block => {
+      const numberedItem = block.match(/^(\d+)\.\s+([\s\S]+)$/);
+      const lines = block.split('\n').map(line => line.trim()).filter(Boolean);
+
+      if (numberedItem) {
+        ensureSpace(12);
+        write(`${numberedItem[1]}.`, {
+          bold: true,
+          color: [18, 59, 67],
+          indent: 2,
+          gap: -4.2,
+        });
+        write(numberedItem[2], { indent: 10, gap: 4 });
+        return;
+      }
+
+      lines.forEach((line, index) => {
+        write(line, {
+          bold: blocks.indexOf(block) === 0 || lines.length > 1,
+          gap: index === lines.length - 1 ? 4 : 1,
+        });
+      });
+    });
+  };
+
   const divider = () => {
     ensureSpace(5);
     doc.setDrawColor(215, 221, 217);
@@ -308,10 +340,9 @@ export function downloadCompleteReport(report) {
   if (!hiddenCostCount) write('No hidden-cost pattern was detected.');
 
   heading(9, 'Negotiation letter');
-  write(
+  writeLetter(
     report.negotiation_letter ||
       'No negotiation letter was generated for this agreement.',
-    { size: 10 },
   );
 
   heading(10, 'Legal help');
