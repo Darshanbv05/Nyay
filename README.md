@@ -67,6 +67,20 @@ Set `FRONTEND_ORIGIN` to the deployed frontend origin. Set `ANTHROPIC_API_KEY` a
 
 For an existing manually configured Render service, apply the same Root Directory, Build Command, and Start Command in its Settings. Select npm rather than Yarn and keep `package-lock.json`; it provides reproducible npm installs.
 
+## Deploy the frontend on Vercel
+
+Import this GitHub repository into Vercel and configure:
+
+- Root Directory: `frontend`
+- Framework Preset: `Vite`
+- Install Command: `npm ci`
+- Build Command: `npm run build`
+- Output Directory: `dist`
+
+Add `VITE_API_URL` in Vercel for Production and Preview. Its value must be the public HTTPS origin of the Render backend, for example `https://your-nyay-backend.onrender.com`, without `/api` or a trailing slash.
+
+After Vercel assigns the production domain, set Render's `FRONTEND_ORIGIN` to that origin, for example `https://your-project.vercel.app`. Multiple allowed origins can be comma-separated for preview or custom domains. Redeploy both services after changing their environment variables.
+
 ## Test
 
 ```bash

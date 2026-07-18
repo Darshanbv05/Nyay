@@ -4,7 +4,16 @@ import cors from 'cors';
 import analyzeRouter from './routes/analyze.js';
 
 const app = express();
-app.use(cors({ origin: process.env.FRONTEND_ORIGIN || 'http://localhost:5173' }));
+const allowedOrigins = (process.env.FRONTEND_ORIGIN || 'http://localhost:5173')
+  .split(',')
+  .map(origin => origin.trim().replace(/\/+$/, ''))
+  .filter(Boolean);
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin.replace(/\/+$/, ''))) return callback(null, true);
+    return callback(Object.assign(new Error('Origin is not allowed by CORS.'), { status: 403 }));
+  }
+}));
 app.use(express.json({ limit: '2mb' }));
 app.get('/api/health', (_req, res) => res.json({ status: 'ok', service: 'nyay-api' }));
 app.use('/api', analyzeRouter);
